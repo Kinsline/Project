@@ -1,0 +1,5 @@
+package com.tradeshift.config;
+
+public class CorsConfig {
+
+}

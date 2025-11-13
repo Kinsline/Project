@@ -1,0 +1,42 @@
+package com.tradeshift.controller;
+
+import com.tradeshift.dto.AuthRequest;
+import com.tradeshift.dto.AuthResponse;
+import com.tradeshift.entities.User;
+import com.tradeshift.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:3002") // apply to all endpoints
+public class AuthController {
+
+    private final AuthService authService;
+    
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User user) {
+        if (authService.emailExists(user.getEmail())) {
+            return new ResponseEntity<>("Email already exists", HttpStatus.CONFLICT);
+        }
+        String token = authService.register(user);
+        return ResponseEntity.ok(new AuthResponse(token));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        try {
+            String token = authService.login(request.getEmail(), request.getPassword());
+            return ResponseEntity.ok(new AuthResponse(token));
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+    }
+}

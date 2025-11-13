@@ -1,0 +1,17 @@
+spring.application.name=Trade
+
+spring.datasource.driver-class-name =com.mysql.cj.jdbc.Driver
+spring.datasource.url =jdbc:mysql://localhost:3306/Trade
+spring.datasource.username =root
+spring.datasource.password =Kins@2810
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+logging.level.org.springframework.security=TRACE
+
+tradeshift.jwt.secret=9f4e8a21dcae4c9e9b1e36dfb2c041a0b7f8a123456789abcdef
+tradeshift.jwt.token.prefix=Bearer 
+tradeshift.jwt.header =Authorization
+
+tradeshift.finnhub.key=d3maiphr01qkjssf2400d3maiphr01qkjssf240g
